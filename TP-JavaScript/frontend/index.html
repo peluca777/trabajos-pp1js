@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TicketApp — Eventos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html"><img src="logo/logo.png" alt="TicketApp"></a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Eventos</a>
+      <a href="favoritos.html">⭐ Favoritos</a>
+      <a href="agregar.html" class="btn-nav-cta">+ Añadir evento</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="page-header">
+      <h1>Próximos eventos</h1>
+      <p>Encontrá los mejores shows y recitales</p>
+    </div>
+
+    <div id="lista-eventos" class="eventos-grid">
+      <!-- Las cards se generan con JS -->
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+  <script>
+    cargarEventos();
+  </script>
+<footer>
+  <p>&copy; 2023 TicketApp. Todos los derechos reservados.</p>
+</footer>
+</body>
+
+</html>

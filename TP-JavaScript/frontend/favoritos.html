@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TicketApp — Mis favoritos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">🎵 TicketApp</a>
+    <div class="nav-links">
+      <a href="index.html">Eventos</a>
+      <a href="favoritos.html" class="active">⭐ Favoritos</a>
+      <a href="agregar.html" class="btn-nav-cta">+ Añadir evento</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="page-header">
+      <h1>Mis favoritos</h1>
+      <p>Los eventos que guardaste</p>
+    </div>
+
+    <div id="lista-favoritos" class="eventos-grid">
+      <!-- Se genera con JS -->
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+  <script>
+    mostrarFavoritos();
+  </script>
+</body>
+</html>

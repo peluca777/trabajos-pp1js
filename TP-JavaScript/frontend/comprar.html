@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TicketApp — Comprar entradas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html"><img src="logo/logo.png" alt="TicketApp"></a>
+    <div class="nav-links">
+      <a href="index.html">Eventos</a>
+      <a href="favoritos.html">⭐ Favoritos</a>
+      <a href="agregar.html" class="btn-nav-cta">+ Añadir evento</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div id="contenido-compra">
+      <p style="color: var(--text-muted)">Cargando evento...</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+  <script>
+    var urlParams = new URLSearchParams(window.location.search)
+    var idEvento = urlParams.get("id")
+
+    if (idEvento == null) {
+        window.location.href = "index.html"
+    }
+
+    async function cargarPaginaCompra() {
+        var respuesta = await fetch(urlApi + "/" + idEvento)
+        var evento = await respuesta.json()
+
+        var imagen = obtenerImagenEvento(evento.id)
+        var imagenHtml = ""
+        if (imagen != null) {
+            imagenHtml = '<img src="' + imagen + '" alt="' + evento.nombre + '" class="compra-imagen">'
+        }
+
+        var html = ""
+        html += '<a href="index.html" class="btn btn-ghost" style="display:inline-block; margin-bottom:24px">← Volver</a>'
+        html += '<div class="compra-contenedor">'
+        html += imagenHtml
+        html += '<div class="compra-info">'
+        html += '<h1 class="compra-titulo">' + evento.nombre + '</h1>'
+        html += '<div class="compra-datos">'
+        html += '<p>🎤 ' + evento.artista + '</p>'
+        html += '<p>📍 ' + evento.lugar + '</p>'
+        html += '</div>'
+        html += '<div class="compra-precio-unitario">Precio por entrada: <span>$' + evento.precio.toLocaleString("es-AR") + '</span></div>'
+        html += '<div class="compra-selector">'
+        html += '<label for="cantidad">Cantidad de entradas</label>'
+        html += '<select id="cantidad" onchange="actualizarTotal(' + evento.precio + ')">'
+        for (var i = 1; i <= 10; i++) {
+            html += '<option value="' + i + '">' + i + ' entrada' + (i > 1 ? 's' : '') + '</option>'
+        }
+        html += '</select>'
+        html += '</div>'
+        html += '<div class="compra-total">Total: <span id="precio-total">$' + evento.precio.toLocaleString("es-AR") + '</span></div>'
+        html += '<button class="btn btn-primary btn-large" onclick="confirmarCompra()">Confirmar compra</button>'
+        html += '</div>'
+        html += '</div>'
+
+        document.getElementById("contenido-compra").innerHTML = html
+    }
+
+    function actualizarTotal(precioUnitario) {
+        var cantidad = document.getElementById("cantidad").value
+        var total = precioUnitario * cantidad
+        document.getElementById("precio-total").textContent = "$" + total.toLocaleString("es-AR")
+    }
+
+    function confirmarCompra() {
+        var cantidad = document.getElementById("cantidad").value
+        mostrarToast("✅ Compraste " + cantidad + " entrada" + (cantidad > 1 ? "s" : "") + "!")
+        setTimeout(function() {
+            window.location.href = "index.html"
+        }, 2000)
+    }
+
+    cargarPaginaCompra()
+  </script>
+
+  <footer>
+    <p>&copy; 2025 TicketApp. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
